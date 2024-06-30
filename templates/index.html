@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Demanda de Tallarines Don Vittorio</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        .table-container {
+            max-height: 400px; /* Puedes ajustar esta altura según sea necesario */
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">Predicción de la Demanda de Tallarines Don Vittorio</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form action="/" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Sube tu archivo Excel</label>
+                        <input type="file" class="form-control-file" id="file" name="file">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mostrar Datos</button>
+                </form>
+                {% if data %}
+                <h3>Tabla de Datos</h3>
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Periodo</th>
+                                <th>Demanda de fideos</th>
+                                <th>Kilos exportados</th>
+                                <th>Precio en promocion</th>
+                                <th>Pedidos semolas de trigo</th>
+                                <th>Pedidos Harina de trigo</th>
+                                <th>Venta unitaria de pastas al interior del pais</th>
+                                <th>Pedidos de mercaderia</th>
+                                <th>Indice de distribucion numerica</th>
+                                <th>Participacion en la publicidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in data %}
+                            <tr>
+                                {% for item in row.split(',') %}
+                                <td>{{ item }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                {% if graph1 and graph2 %}
+                <h3>Gráficos</h3>
+                <img src="{{ url_for('static', filename=graph1) }}" class="img-fluid" alt="Observado">
+                <img src="{{ url_for('static', filename=graph2) }}" class="img-fluid mt-3" alt="Predicciones">
+                {% endif %}
+            </div>
+        </div>
+        {% if show_predict_button %}
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <form action="/predict" method="post">
+                    <button type="submit" class="btn btn-primary">Mostrar Predicciones</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
