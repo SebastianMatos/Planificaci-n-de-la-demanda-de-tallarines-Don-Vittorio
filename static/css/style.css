@@ -43,6 +43,7 @@ h1 {
     background-color: #d01c1f;
     color: white;
     font-weight: bold;
+    vertical-align: middle;
 }
 
 .table tbody tr:nth-child(odd) {
@@ -105,4 +106,5 @@ table td:last-child {
 
 button {
     transition: background-color 0.3s, border-color 0.3s;
+    padding-bottom: 10px;
 }
